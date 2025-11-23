@@ -1,9 +1,16 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:simple_application/components/chat_bubble.dart';
+import 'package:simple_application/components/chat_input.dart';
 
-class ChatPage extends StatelessWidget {
+class ChatPage extends StatefulWidget {
   const ChatPage({super.key});
 
+  @override
+  State<ChatPage> createState() => _ChatPageState();
+}
+
+class _ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,35 +28,22 @@ class ChatPage extends StatelessWidget {
           ),
         ],
       ),
-      body: Container(
-        padding: EdgeInsets.all(24),
-        width: 300,
-        margin: EdgeInsets.all(40),
-        decoration: BoxDecoration(
-          color: Colors.grey,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(12),
-            topRight: Radius.circular(12),
-            bottomLeft: Radius.circular(12),
-          ),
-        ),
-        child: Column(
-          // by default, COlumn will take up the space of its container
-          // use this so that it takes up only the space necessary!
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              textAlign: TextAlign.end,
-              "Hi, this is Nnaemeka",
-              style: TextStyle(
-                fontSize: 20,
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-              ),
+      body: Column(
+        children: [
+          Expanded(
+            child: ListView(
+              children: [
+                ChatBubble(),
+                ChatBubble(),
+                ChatBubble(),
+                ChatBubble(),
+                ChatBubble(),
+                ChatBubble(),
+              ],
             ),
-            Image.asset("assets/images/silver_ball.jpg"),
-          ],
-        ),
+          ),
+          ChatInputWidget(),
+        ],
       ),
     );
   }
