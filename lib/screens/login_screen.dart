@@ -1,48 +1,12 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:simple_application/utils/login_utils.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
 
   final _formKey = GlobalKey<FormState>();
-  final userNameController = TextEditingController();
+  final usernameController = TextEditingController();
   final passwordController = TextEditingController();
-
-  // this will be triggered when the user presses the log in button
-  void loginUser() {
-    if (_formKey.currentState != null && _formKey.currentState!.validate()) {
-      if (kDebugMode) {
-        print("Log in Successiful");
-
-        print("Username: ${userNameController.text}");
-        print("Username: ${passwordController.text}");
-      }
-    }
-  }
-
-  String? validateUserName(String? userName) {
-    String? message;
-    if (userName != null) {
-      if (userName.isEmpty) {
-        message = "Username can NOT be empty";
-      } else if (userName.isNotEmpty && userName.length < 5) {
-        message = "Username must be greater than 4 characters";
-      }
-    }
-    return message;
-  }
-
-  String? validatePassword(String? password) {
-    String? message;
-    if (password != null) {
-      if (password.isEmpty) {
-        message = "password CANNOT be empty!";
-      } else if (password.isNotEmpty && password.length < 5) {
-        message = "password must have more than 4 characters";
-      }
-    }
-    return message;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +56,7 @@ class LoginScreen extends StatelessWidget {
                   // regular TextField does NOT have a validator property
                   TextFormField(
                     autocorrect: false,
-                    controller: userNameController,
+                    controller: usernameController,
                     validator: (value) => validateUserName(value),
                     decoration: InputDecoration(
                       label: Text(("Username")),
@@ -120,7 +84,12 @@ class LoginScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 ElevatedButton(
-                  onPressed: loginUser,
+                  onPressed: () => loginUser(
+                    context,
+                    formKey: _formKey,
+                    usernameController: usernameController,
+                    passwordController: passwordController,
+                  ),
                   child: Text(
                     "Log In",
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),

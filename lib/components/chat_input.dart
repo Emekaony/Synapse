@@ -32,6 +32,12 @@ class _ChatInputWidgetState extends State<ChatInputWidget> {
           ),
           Expanded(
             child: TextField(
+              autocorrect: false,
+              keyboardType: TextInputType.multiline,
+              minLines: 1,
+              // u have to add a maxLines property else it will not do that
+              // animation where the input gets bigger
+              maxLines: 5,
               controller: textFieldController,
               cursorColor: Colors.white,
               style: TextStyle(color: Colors.white),

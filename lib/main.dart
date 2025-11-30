@@ -24,7 +24,7 @@ class ChatApp extends StatelessWidget {
           ),
         ),
       ),
-      home: ChatScreen(),
+      home: LoginScreen(),
     );
   }
 }
