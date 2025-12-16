@@ -19,7 +19,6 @@ class NetworkImagePickerBottomSheet extends StatelessWidget {
           topRight: Radius.circular(20),
         ),
       ),
-      // just return 1 image for now!
       child: FutureBuilder<List<ImageModel>>(
         future: ImageRepository.getNetworkImages(),
         builder:
