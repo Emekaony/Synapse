@@ -1,40 +1,30 @@
 // ignore_for_file: avoid_print
-
-import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:simple_application/components/chat_bubble.dart';
 import 'package:simple_application/components/chat_input.dart';
-import 'package:simple_application/models/author.dart';
 import 'package:simple_application/models/chat_message_entity.dart';
+import 'package:simple_application/repo/message_repository.dart';
 
 // ignore: must_be_immutable
 class ChatScreen extends StatefulWidget {
-  ChatScreen({super.key});
-
-  List<ChatMessageEntity> _messages = [];
+  const ChatScreen({super.key});
 
   @override
   State<ChatScreen> createState() => _ChatScreenState();
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  void _loadInitialMessages() async {
-    final response = await rootBundle.loadString("assets/json/messages.json");
-    final List<dynamic> decodedList = jsonDecode(response) as List;
-    widget._messages = decodedList.map((item) {
-      return ChatMessageEntity.fromJson(item);
-    }).toList();
-
-    // update the UI after we're done doing preliminary work
-    setState(() {});
-  }
+  List<ChatMessageEntity> _messages = [];
 
   @override
   // init state is called once when the app first runs
   void initState() {
-    _loadInitialMessages();
+    // quick dirty async hack!
+    MessageRepository.loadInitialMessages().then((result) {
+      _messages = result;
+      setState(() {});
+    });
     super.initState();
   }
 
@@ -65,13 +55,13 @@ class _ChatScreenState extends State<ChatScreen> {
           children: [
             Expanded(
               child: ListView.builder(
-                itemCount: widget._messages.length,
+                itemCount: _messages.length,
                 itemBuilder: (BuildContext context, int index) {
                   final Alignment buttonAlignment = index % 2 == 0
                       ? Alignment.centerLeft
                       : Alignment.centerRight;
                   return ChatBubble(
-                    entity: widget._messages[index],
+                    entity: _messages[index],
                     alignment: buttonAlignment,
                   );
                 },

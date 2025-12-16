@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:simple_application/components/network_image_picker_sheet.dart';
 
 class ChatInputWidget extends StatefulWidget {
   final Function(String) onSubmit;
@@ -26,7 +27,13 @@ class _ChatInputWidgetState extends State<ChatInputWidget> {
         children: [
           IconButton(
             onPressed: () {
-              log("pressd the add button");
+              showModalBottomSheet(
+                backgroundColor: Colors.transparent,
+                context: context,
+                builder: (BuildContext context) {
+                  return NetworkImagePickerBottomSheet();
+                },
+              );
             },
             icon: Icon(Icons.add, color: Colors.white),
           ),

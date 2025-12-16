@@ -11,6 +11,9 @@ class ChatBubble extends StatelessWidget {
     return Align(
       alignment: alignment,
       child: Container(
+        constraints: BoxConstraints(
+          maxWidth: MediaQuery.of(context).size.width * 0.7,
+        ),
         margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
         decoration: BoxDecoration(
@@ -22,6 +25,8 @@ class ChatBubble extends StatelessWidget {
           color: Colors.blue,
         ),
         child: Column(
+          // the default for crossAxisAlignment in Column is center
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(entity.text),
             // conditionally render the chat bubbles image
